@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBT Ujian Harian - Informatika</title>
+    <title>Ulangan Harian - Informatika</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -38,7 +38,7 @@
 
         .container {
             width: 100%;
-            max-width: 850px;
+            max-width: 1000px;
         }
 
         .card {
@@ -199,10 +199,54 @@
             color: #334155;
         }
 
+        /* LAYOUT UTAMA UJIAN (KIRI: NAVIGASI, KANAN: SOAL) */
+        .exam-layout {
+            display: flex;
+            gap: 25px;
+            align-items: flex-start;
+        }
+
+        /* NAVIGASI NOMOR SOAL DI KIRI */
+        .nav-panel {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 14px;
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 0;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .question-main-area {
+            flex-grow: 1;
+            width: 100%;
+        }
+
         .question-text {
             font-size: 18px;
             line-height: 1.7;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: #1e293b;
         }
 
@@ -232,7 +276,7 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
 
         .option-label {
@@ -267,6 +311,17 @@
             background-color: #eef2ff;
             color: var(--primary);
             box-shadow: 0 4px 15px rgba(79, 70, 229, 0.1);
+        }
+
+        .question-footer-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
         }
 
         .navigation {
@@ -347,9 +402,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
             .card { padding: 25px 20px; }
+            .exam-layout { flex-direction: column; }
+            .nav-panel { width: 100%; }
+            .nav-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); }
             .navigation { flex-direction: column; }
             .navigation .btn { width: 100%; }
             .exam-info { flex-direction: column; gap: 10px; text-align: center; }
@@ -363,7 +421,7 @@
         
         <!-- HEADER -->
         <div class="header" id="main-header">
-            <h1>ULANGAN HARIAN</h1>
+            <h1>Ulangan Harian</h1>
             <p>Informatika: Berpikir Komputasional</p>
         </div>
 
@@ -412,23 +470,50 @@
                 <span id="question-counter" style="background: #e0e7ff; padding: 4px 12px; border-radius: 20px; font-size: 14px;">Soal 1 / 15</span>
             </div>
 
-            <div class="question-text fade-in" id="question-text">
-                <!-- Pertanyaan muncul di sini -->
-            </div>
+            <!-- LAYOUT UTAMA (KIRI: NAVIGASI, KANAN: SOAL) -->
+            <div class="exam-layout">
+                <!-- Panel Navigasi di Kiri -->
+                <div class="nav-panel">
+                    <div style="font-size: 14px; font-weight: 600; color: #334155;">Daftar Soal (1 - 15)</div>
+                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+                        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; display: inline-block;"></span> Terisi</span>
+                        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #facc15; border-radius: 50%; display: inline-block;"></span> Ragu-ragu</span>
+                        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #e2e8f0; border-radius: 50%; display: inline-block;"></span> Belum terisi</span>
+                    </div>
+                    <div class="nav-grid" id="nav-grid-container">
+                        <!-- Digenerate oleh JavaScript -->
+                    </div>
+                </div>
 
-            <div class="options-container fade-in" id="options-container">
-                <!-- Pilihan ganda muncul di sini -->
-            </div>
+                <!-- Area Soal di Kanan -->
+                <div class="question-main-area">
+                    <div class="question-text fade-in" id="question-text">
+                        <!-- Pertanyaan muncul di sini -->
+                    </div>
 
-            <div class="navigation">
-                <button class="btn btn-outline" id="btn-prev" onclick="prevQuestion()">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    Sebelumnya
-                </button>
-                <button class="btn" id="btn-next" onclick="nextQuestion()">
-                    Selanjutnya
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </button>
+                    <div class="options-container fade-in" id="options-container">
+                        <!-- Pilihan ganda muncul di sini -->
+                    </div>
+
+                    <!-- Tombol Ragu-ragu -->
+                    <div class="question-footer-action">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600; color: #475569;">
+                            <input type="checkbox" id="doubt-checkbox" onchange="toggleDoubt()" style="transform: scale(1.3); accent-color: #eab308; cursor: pointer;">
+                            Centang jika Ragu-ragu
+                        </label>
+                    </div>
+
+                    <div class="navigation">
+                        <button class="btn btn-outline" id="btn-prev" onclick="prevQuestion()">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            Sebelumnya
+                        </button>
+                        <button class="btn" id="btn-next" onclick="nextQuestion()">
+                            Selanjutnya
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -455,7 +540,6 @@
                 </div>
             </div>
 
-            <!-- Tombol untuk melihat kesalahan/pembahasan -->
             <button class="btn btn-outline" onclick="showReview()" style="margin-bottom: 15px;">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012-2m-6 9l2 2 4-4"></path></svg>
                 Lihat Kesalahan & Pembahasan
@@ -467,13 +551,13 @@
             </button>
         </div>
 
-        <!-- SECTION 4: REVIEW INTERFACE (PILIHAN UNTUK MENGETAHUI KESALAHAN) -->
+        <!-- SECTION 4: REVIEW INTERFACE -->
         <div id="review-section" class="fade-in">
             <h2 style="color: #1e293b; margin-top: 0; margin-bottom: 10px; text-align: center;">Review & Kunci Jawaban</h2>
             <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px;">Tinjau kembali jawaban Anda dan temukan letak kesalahannya.</p>
             
             <div id="review-container" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 25px;">
-                <!-- Item review akan dimasukkan lewat Javascript -->
+                <!-- Item review dimasukkan lewat JS -->
             </div>
 
             <button class="btn" onclick="backToResult()">
@@ -486,6 +570,7 @@
 </div>
 
 <script>
+    // DATA 15 SOAL BERPIKIR KOMPUTASIONAL
     const dbQuestions = [
         {
             q: "Apa yang dimaksud dengan Berpikir Komputasional?",
@@ -642,6 +727,7 @@
     let examQuestions = [];
     let currentQuestionIndex = 0;
     let userAnswers = [];
+    let userDoubts = [];
     let studentData = {};
 
     function shuffleArray(array) {
@@ -672,6 +758,7 @@
         studentData = { nama, kelas, absen: absenNum };
         examQuestions = shuffleArray(dbQuestions);
         userAnswers = new Array(examQuestions.length).fill(null);
+        userDoubts = new Array(examQuestions.length).fill(false);
         currentQuestionIndex = 0;
 
         document.getElementById('student-info-display').innerHTML = `
@@ -696,6 +783,10 @@
         document.getElementById('progress-bar').style.width = `${progressPercent}%`;
         document.getElementById('question-counter').textContent = `Soal ${currentQuestionIndex + 1} / ${examQuestions.length}`;
         
+        renderNavGrid();
+
+        document.getElementById('doubt-checkbox').checked = userDoubts[currentQuestionIndex];
+        
         const qTextNode = document.getElementById('question-text');
         qTextNode.classList.remove('fade-in');
         void qTextNode.offsetWidth; 
@@ -719,6 +810,7 @@
                 allLabels.forEach(l => l.classList.remove('selected'));
                 this.classList.add('selected');
                 userAnswers[currentQuestionIndex] = index;
+                renderNavGrid();
             };
 
             const input = document.createElement('input');
@@ -753,6 +845,52 @@
         }
     }
 
+    function renderNavGrid() {
+        const gridContainer = document.getElementById('nav-grid-container');
+        gridContainer.innerHTML = '';
+
+        examQuestions.forEach((_, idx) => {
+            const btn = document.createElement('div');
+            btn.className = 'nav-btn';
+            btn.textContent = idx + 1;
+
+            const isAnswered = userAnswers[idx] !== null;
+            const isDoubt = userDoubts[idx];
+            const isCurrent = idx === currentQuestionIndex;
+
+            if (isDoubt) {
+                btn.style.backgroundColor = '#facc15';
+                btn.style.color = '#713f12';
+                btn.style.borderColor = '#eab308';
+            } else if (isAnswered) {
+                btn.style.backgroundColor = '#10b981';
+                btn.style.color = '#ffffff';
+                btn.style.borderColor = '#059669';
+            } else {
+                btn.style.backgroundColor = '#e2e8f0';
+                btn.style.color = '#475569';
+                btn.style.borderColor = '#cbd5e1';
+            }
+
+            if (isCurrent) {
+                btn.style.outline = '3px solid var(--primary)';
+            }
+
+            btn.onclick = function() {
+                currentQuestionIndex = idx;
+                renderQuestion();
+            };
+
+            gridContainer.appendChild(btn);
+        });
+    }
+
+    function toggleDoubt() {
+        const checkbox = document.getElementById('doubt-checkbox');
+        userDoubts[currentQuestionIndex] = checkbox.checked;
+        renderNavGrid();
+    }
+
     function prevQuestion() {
         if (currentQuestionIndex > 0) {
             currentQuestionIndex--;
@@ -761,16 +899,46 @@
     }
 
     function nextQuestion() {
-        if (userAnswers[currentQuestionIndex] === null) {
-            const confirmNext = confirm("Anda belum menjawab soal ini. Lanjutkan ke soal berikutnya?");
-            if (!confirmNext) return;
-        }
-
+        // Jika belum di soal terakhir (masih menekan Selanjutnya)
         if (currentQuestionIndex < examQuestions.length - 1) {
+            if (userAnswers[currentQuestionIndex] === null && !userDoubts[currentQuestionIndex]) {
+                const confirmNext = confirm("Anda belum menjawab soal ini. Lanjutkan ke soal berikutnya?");
+                if (!confirmNext) return;
+            }
             currentQuestionIndex++;
             renderQuestion();
         } else {
-            const confirmSubmit = confirm("Apakah Anda yakin ingin mengumpulkan ujian? Pastikan semua jawaban sudah terisi.");
+            // JIKA MENEKAN TOMBOL SELESAI & KUMPULKAN
+            
+            // 1. Cek apakah ada yang masih kosong (abu-abu) atau ragu-ragu (kuning)
+            let unfinished = [];
+            let doubtful = [];
+
+            for (let i = 0; i < examQuestions.length; i++) {
+                if (userAnswers[i] === null) {
+                    unfinished.push(i + 1);
+                }
+                if (userDoubts[i] === true) {
+                    doubtful.push(i + 1);
+                }
+            }
+
+            // 2. Jika ada, gagalkan pengumpulan dan tampilkan alert informatif
+            if (unfinished.length > 0 || doubtful.length > 0) {
+                let alertMsg = "Anda belum bisa mengumpulkan ujian karena ada soal yang bermasalah:\n\n";
+                if (unfinished.length > 0) {
+                    alertMsg += "- Belum diisi (Abu): Soal " + unfinished.join(", ") + "\n";
+                }
+                if (doubtful.length > 0) {
+                    alertMsg += "- Ragu-ragu (Kuning): Soal " + doubtful.join(", ") + "\n";
+                }
+                alertMsg += "\nSilakan lengkapi jawaban dan hilangkan centang 'Ragu-ragu' terlebih dahulu.";
+                alert(alertMsg);
+                return; // Membatalkan proses pengumpulan
+            }
+
+            // 3. Jika sudah aman (terisi semua dan tidak ada yang kuning), boleh konfirmasi submit
+            const confirmSubmit = confirm("Apakah Anda yakin ingin mengumpulkan ujian? Semua jawaban sudah terisi.");
             if (confirmSubmit) {
                 finishExam();
             }
@@ -809,7 +977,6 @@
         }
     }
 
-    // Fungsi Menampilkan Halaman Kesalahan & Pembahasan
     function showReview() {
         document.getElementById('result-section').style.display = 'none';
         const reviewSection = document.getElementById('review-section');
@@ -833,10 +1000,8 @@
                 let style = 'padding: 10px 14px; margin-top: 8px; border-radius: 10px; font-size: 15px; border: 1px solid #e2e8f0; background: #ffffff;';
                 
                 if (optIdx === qData.ans) {
-                    // Pilihan yang benar
                     style = 'padding: 10px 14px; margin-top: 8px; border-radius: 10px; font-size: 15px; border: 2px solid #10b981; background-color: #d1fae5; color: #065f46; font-weight: 600;';
                 } else if (optIdx === userAns && !isCorrect) {
-                    // Pilihan user yang salah
                     style = 'padding: 10px 14px; margin-top: 8px; border-radius: 10px; font-size: 15px; border: 2px solid #ef4444; background-color: #fee2e2; color: #991b1b; text-decoration: line-through; font-weight: 500;';
                 }
 
