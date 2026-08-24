@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Ujian Harian - Informatika</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #10b981;
+            --bg-gradient-1: #e0e7ff;
+            --bg-gradient-2: #c7d2fe;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --error: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2));
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Decorative top bar */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), #3b82f6, var(--secondary));
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* FORM LOGIN */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #334155;
+            font-size: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+            color: var(--text-main);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 28px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(79, 70, 229, 0.25);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border-color: var(--border);
+            box-shadow: none;
+        }
+
+        /* EXAM SECTION */
+        #exam-section {
+            display: none;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #3b82f6);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .exam-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8fafc;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: var(--primary);
+            border: 1px solid #e2e8f0;
+        }
+
+        .student-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+        }
+
+        .question-text {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: #1e293b;
+        }
+
+        /* STUDI KASUS STYLING */
+        .studi-kasus-box {
+            background-color: #f1f5f9;
+            border-left: 5px solid #3b82f6;
+            padding: 18px 24px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+            font-size: 16px;
+            color: #334155;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        
+        .studi-kasus-box ul, .studi-kasus-box ol {
+            margin-top: 12px;
+            margin-bottom: 0;
+            padding-left: 22px;
+        }
+        
+        .studi-kasus-box li {
+            margin-bottom: 8px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 35px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 16px 22px;
+            background-color: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            line-height: 1.5;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .option-label:hover {
+            border-color: #a5b4fc;
+            background-color: #f8fafc;
+            transform: scale(1.01);
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 16px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label.selected {
+            border-color: var(--primary);
+            background-color: #eef2ff;
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.1);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .navigation .btn {
+            width: 48%;
+        }
+
+        /* RESULT SECTION */
+        #result-section {
+            display: none;
+            text-align: center;
+        }
+        
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0 auto 25px auto;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            border: 6px solid #d1fae5;
+        }
+
+        .result-details {
+            background-color: #f8fafc;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        
+        .result-row span:first-child {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .result-row span:last-child {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* REVIEW SECTION */
+        #review-section {
+            display: none;
+            text-align: left;
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card { padding: 25px 20px; }
+            .navigation { flex-direction: column; }
+            .navigation .btn { width: 100%; }
+            .exam-info { flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        
+        <!-- HEADER -->
+        <div class="header" id="main-header">
+            <h1>ULANGAN HARIAN</h1>
+            <p>Informatika: Berpikir Komputasional</p>
+        </div>
+
+        <!-- SECTION 1: DATA DIRI (LOGIN) -->
+        <div id="login-section" class="fade-in">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" class="form-control" placeholder="Masukkan nama lengkap Anda" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="kelas">Kelas</label>
+                <select id="kelas" class="form-control">
+                    <option value="" disabled selected>-- Pilih Kelas --</option>
+                    <script>
+                        for(let i=0; i<10; i++){
+                            let letter = String.fromCharCode(65 + i);
+                            document.write(`<option value="7${letter}">7${letter}</option>`);
+                        }
+                    </script>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="absen">Nomor Absen (1 - 32)</label>
+                <input type="number" id="absen" class="form-control" min="1" max="32" placeholder="Ketik angka 1 sampai 32" autocomplete="off">
+            </div>
+
+            <button class="btn" onclick="startExam()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                Mulai Ujian
+            </button>
+        </div>
+
+        <!-- SECTION 2: EXAM INTERFACE -->
+        <div id="exam-section">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="exam-info">
+                <span class="student-badge" id="student-info-display">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Peserta: -
+                </span>
+                <span id="question-counter" style="background: #e0e7ff; padding: 4px 12px; border-radius: 20px; font-size: 14px;">Soal 1 / 15</span>
+            </div>
+
+            <div class="question-text fade-in" id="question-text">
+                <!-- Pertanyaan muncul di sini -->
+            </div>
+
+            <div class="options-container fade-in" id="options-container">
+                <!-- Pilihan ganda muncul di sini -->
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-outline" id="btn-prev" onclick="prevQuestion()">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Sebelumnya
+                </button>
+                <button class="btn" id="btn-next" onclick="nextQuestion()">
+                    Selanjutnya
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 3: RESULT INTERFACE -->
+        <div id="result-section" class="fade-in">
+            <div class="score-circle" id="res-score-circle">
+                0
+            </div>
+            <h2 style="margin-top: 0; color: #1e293b;">Ujian Selesai!</h2>
+            <p style="color: var(--text-muted);">Kerja bagus! Anda telah menyelesaikan seluruh soal.</p>
+            
+            <div class="result-details">
+                <div class="result-row">
+                    <span>Nama Lengkap</span>
+                    <span id="res-nama"></span>
+                </div>
+                <div class="result-row">
+                    <span>Kelas</span>
+                    <span id="res-kelas"></span>
+                </div>
+                <div class="result-row">
+                    <span>No. Absen</span>
+                    <span id="res-absen"></span>
+                </div>
+            </div>
+
+            <!-- Tombol untuk melihat kesalahan/pembahasan -->
+            <button class="btn btn-outline" onclick="showReview()" style="margin-bottom: 15px;">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012-2m-6 9l2 2 4-4"></path></svg>
+                Lihat Kesalahan & Pembahasan
+            </button>
+
+            <button class="btn" onclick="location.reload()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                Kembali ke Halaman Awal
+            </button>
+        </div>
+
+        <!-- SECTION 4: REVIEW INTERFACE (PILIHAN UNTUK MENGETAHUI KESALAHAN) -->
+        <div id="review-section" class="fade-in">
+            <h2 style="color: #1e293b; margin-top: 0; margin-bottom: 10px; text-align: center;">Review & Kunci Jawaban</h2>
+            <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px;">Tinjau kembali jawaban Anda dan temukan letak kesalahannya.</p>
+            
+            <div id="review-container" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 25px;">
+                <!-- Item review akan dimasukkan lewat Javascript -->
+            </div>
+
+            <button class="btn" onclick="backToResult()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Kembali ke Ringkasan Hasil
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const dbQuestions = [
+        {
+            q: "Apa yang dimaksud dengan Berpikir Komputasional?",
+            opts: [
+                "A. Berpikir seperti robot atau mesin dalam kehidupan sehari-hari",
+                "B. Pendekatan pemecahan masalah dengan menerapkan teknik ilmu komputer",
+                "C. Proses memperbaiki komputer yang rusak secara mandiri",
+                "D. Menghafal seluruh bahasa pemrograman yang ada"
+            ],
+            ans: 1
+        },
+        {
+            q: "Berikut ini yang BUKAN merupakan 4 pilar dari berpikir komputasional adalah...",
+            opts: [
+                "A. Dekomposisi",
+                "B. Algoritma",
+                "C. Pengenalan Pola",
+                "D. Memorization (Penghafalan)"
+            ],
+            ans: 3
+        },
+        {
+            q: "Tujuan utama seseorang menggunakan cara berpikir komputasional adalah...",
+            opts: [
+                "A. Menyelesaikan masalah secara efisien, sistematis, dan logis",
+                "B. Menambah masalah baru agar pikiran lebih aktif",
+                "C. Untuk menciptakan hardware komputer terbaru",
+                "D. Menghindari pekerjaan yang sulit"
+            ],
+            ans: 0
+        },
+        {
+            q: "Proses memecah masalah yang rumit menjadi bagian-bagian yang lebih kecil dan mudah dikelola disebut...",
+            opts: [
+                "A. Abstraksi",
+                "B. Algoritma",
+                "C. Dekomposisi",
+                "D. Pengenalan Pola"
+            ],
+            ans: 2
+        },
+        {
+            q: "Budi diminta oleh ibunya untuk membersihkan seluruh rumah. Karena rumahnya sangat besar, Budi merasa kewalahan.<br><br>Budi akhirnya memutuskan untuk membagi tugasnya:<br><div class='studi-kasus-box'><ul><li>Hari ini: membersihkan kamar tidur dan kamar mandi.</li><li>Besok: membersihkan ruang tamu dan dapur.</li></ul></div><br>Tindakan Budi menerapkan pilar...",
+            opts: [
+                "A. Dekomposisi",
+                "B. Abstraksi",
+                "C. Pengenalan Pola",
+                "D. Coding"
+            ],
+            ans: 0
+        },
+        {
+            q: "Rina ingin memasak Nasi Goreng Spesial. Contoh penerapan <strong>dekomposisi</strong> yang tepat oleh Rina adalah...",
+            opts: [
+                "A. Rina langsung menggoreng semua bahan tanpa persiapan",
+                "B. Rina membagi prosesnya menjadi: menyiapkan alat, menyiapkan bahan bumbu, menanak nasi, dan proses menggoreng",
+                "C. Rina mengingat-ingat kapan terakhir kali ia makan nasi goreng",
+                "D. Rina menyusun urutan cara menggoreng dari awal hingga akhir"
+            ],
+            ans: 1
+        },
+        {
+            q: "Apa fungsi utama dari Pengenalan Pola (Pattern Recognition) dalam menyelesaikan masalah?",
+            opts: [
+                "A. Menghapus data yang salah",
+                "B. Membantu melihat kesamaan atau tren sehingga solusi bisa diterapkan dengan lebih cepat",
+                "C. Memecah masalah menjadi lebih rumit",
+                "D. Menyusun langkah-langkah secara acak"
+            ],
+            ans: 1
+        },
+        {
+            q: "Seorang pedagang es buah mengamati kondisi penjualannya:<div class='studi-kasus-box'><ul><li>Penjualan selalu meningkat tajam setiap kali cuaca sangat panas.</li><li>Penjualan juga meningkat tajam pada hari libur.</li></ul>Ketika ia memprediksi minggu depan cuaca akan cerah dan ada tanggal merah, ia menyiapkan stok dua kali lipat.</div><br>Pedagang tersebut menerapkan...",
+            opts: [
+                "A. Dekomposisi",
+                "B. Abstraksi",
+                "C. Pengenalan Pola",
+                "D. Algoritma"
+            ],
+            ans: 2
+        },
+        {
+            q: "Andi mencoba login ke akun media sosialnya.<div class='studi-kasus-box'>Sistem memberitahu bahwa Andi telah salah memasukkan password sebanyak 3 kali, dan harus menunggu 5 menit untuk mencoba lagi.</div><br>Sistem yang mengenali aktivitas mencurigakan ini menggunakan metode...",
+            opts: [
+                "A. Algoritma",
+                "B. Pengenalan Pola (Security Pattern)",
+                "C. Dekomposisi",
+                "D. Abstraksi Data"
+            ],
+            ans: 1
+        },
+        {
+            q: "Dalam berpikir komputasional, proses menyaring informasi, mengabaikan hal yang tidak penting, dan hanya berfokus pada informasi inti disebut...",
+            opts: [
+                "A. Abstraksi",
+                "B. Dekomposisi",
+                "C. Pattern Recognition",
+                "D. Evaluasi"
+            ],
+            ans: 0
+        },
+        {
+            q: "Saat kamu membuat peta penunjuk arah dari sekolah ke rumahmu untuk temanmu, kamu hanya menggambar:<div class='studi-kasus-box'><ul><li>Jalan utama</li><li>Persimpangan penting</li><li>Landmark (bangunan patokan) besar</li></ul>*Tanpa menggambar pohon, tiang listrik, atau warna atap rumah warga.</div><br>Tindakan ini adalah contoh...",
+            opts: [
+                "A. Dekomposisi",
+                "B. Abstraksi",
+                "C. Algoritma",
+                "D. Pengenalan Pola"
+            ],
+            ans: 1
+        },
+        {
+            q: "Dalam pembuatan aplikasi <strong>Sistem Informasi Perpustakaan</strong>, data anggota perpustakaan harus dikumpulkan. <br><br>Manakah informasi berikut yang sebaiknya <strong>'diabstraksikan'</strong> (diabaikan karena tidak penting untuk perpustakaan)?",
+            opts: [
+                "A. Nama Lengkap",
+                "B. Nomor Induk Siswa",
+                "C. Makanan Favorit",
+                "D. Alamat dan Nomor Telepon"
+            ],
+            ans: 2
+        },
+        {
+            q: "Algoritma dalam pilar berpikir komputasional didefinisikan sebagai...",
+            opts: [
+                "A. Mesin penghitung otomatis",
+                "B. Kumpulan data yang memiliki pola yang sama",
+                "C. Rangkaian instruksi atau langkah-langkah logis untuk menyelesaikan suatu masalah",
+                "D. Bahasa yang digunakan untuk berkomunikasi antar komputer"
+            ],
+            ans: 2
+        },
+        {
+            q: "Cermati langkah-langkah membuat teh berikut:<div class='studi-kasus-box'><ol><li>Masukkan teh celup ke dalam cangkir.</li><li>Tuangkan air panas.</li><li>Tambahkan gula secukupnya.</li><li>Aduk hingga rata.</li><li>Teh siap dinikmati.</li></ol></div><br>Rangkaian langkah-langkah tersebut adalah contoh penerapan pilar...",
+            opts: [
+                "A. Algoritma",
+                "B. Dekomposisi",
+                "C. Abstraksi",
+                "D. Pengenalan Pola"
+            ],
+            ans: 0
+        },
+        {
+            q: "Siti ingin membeli buku secara online. Ia mengikuti panduan:<div class='studi-kasus-box'><ol><li>Buka aplikasi</li><li>Cari buku di kolom pencarian</li><li>Masukkan ke keranjang</li><li>Pilih metode pembayaran</li><li>Lakukan pembayaran</li></ol></div><br>Apa yang terjadi jika Siti mengabaikan konsep Algoritma dan melakukan langkah nomor (5) terlebih dahulu sebelum langkah (3)?",
+            opts: [
+                "A. Transaksi berhasil lebih cepat",
+                "B. Transaksi akan gagal atau error karena urutannya tidak logis",
+                "C. Pola aplikasi akan berubah secara otomatis",
+                "D. Aplikasi akan memecah masalah untuk Siti"
+            ],
+            ans: 1
+        }
+    ];
+
+    let examQuestions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    let studentData = {};
+
+    function shuffleArray(array) {
+        let shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    function startExam() {
+        const nama = document.getElementById('nama').value.trim();
+        const kelas = document.getElementById('kelas').value;
+        const absen = document.getElementById('absen').value.trim();
+
+        if (!nama || !kelas || !absen) {
+            alert("Harap lengkapi Nama, Kelas, dan Nomor Absen sebelum memulai ujian!");
+            return;
+        }
+
+        const absenNum = parseInt(absen);
+        if (isNaN(absenNum) || absenNum < 1 || absenNum > 32) {
+            alert("Nomor Absen harus berupa angka antara 1 sampai 32!");
+            return;
+        }
+
+        studentData = { nama, kelas, absen: absenNum };
+        examQuestions = shuffleArray(dbQuestions);
+        userAnswers = new Array(examQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+
+        document.getElementById('student-info-display').innerHTML = `
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            ${nama} (${kelas} / ${absenNum})
+        `;
+        
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('main-header').style.display = 'none';
+        
+        const examSection = document.getElementById('exam-section');
+        examSection.style.display = 'block';
+        examSection.classList.add('fade-in');
+
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const qData = examQuestions[currentQuestionIndex];
+        const progressPercent = ((currentQuestionIndex) / examQuestions.length) * 100;
+        
+        document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+        document.getElementById('question-counter').textContent = `Soal ${currentQuestionIndex + 1} / ${examQuestions.length}`;
+        
+        const qTextNode = document.getElementById('question-text');
+        qTextNode.classList.remove('fade-in');
+        void qTextNode.offsetWidth; 
+        qTextNode.classList.add('fade-in');
+        qTextNode.innerHTML = `<strong>${currentQuestionIndex + 1}.</strong> ${qData.q}`;
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.classList.remove('fade-in');
+        void optionsContainer.offsetWidth; 
+        optionsContainer.classList.add('fade-in');
+        optionsContainer.innerHTML = '';
+        
+        qData.opts.forEach((optText, index) => {
+            const isChecked = userAnswers[currentQuestionIndex] === index;
+            
+            const label = document.createElement('label');
+            label.className = `option-label ${isChecked ? 'selected' : ''}`;
+            
+            label.onclick = function() {
+                const allLabels = optionsContainer.querySelectorAll('.option-label');
+                allLabels.forEach(l => l.classList.remove('selected'));
+                this.classList.add('selected');
+                userAnswers[currentQuestionIndex] = index;
+            };
+
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `q${currentQuestionIndex}`;
+            input.value = index;
+            if (isChecked) input.checked = true;
+
+            const span = document.createElement('span');
+            span.innerHTML = optText;
+
+            label.appendChild(input);
+            label.appendChild(span);
+            optionsContainer.appendChild(label);
+        });
+
+        document.getElementById('btn-prev').style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+        
+        const btnNext = document.getElementById('btn-next');
+        if (currentQuestionIndex === examQuestions.length - 1) {
+            btnNext.innerHTML = `
+                Selesai & Kumpulkan
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+            `;
+            btnNext.style.backgroundColor = "var(--secondary)";
+        } else {
+            btnNext.innerHTML = `
+                Selanjutnya
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            `;
+            btnNext.style.backgroundColor = "var(--primary)";
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion();
+        }
+    }
+
+    function nextQuestion() {
+        if (userAnswers[currentQuestionIndex] === null) {
+            const confirmNext = confirm("Anda belum menjawab soal ini. Lanjutkan ke soal berikutnya?");
+            if (!confirmNext) return;
+        }
+
+        if (currentQuestionIndex < examQuestions.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion();
+        } else {
+            const confirmSubmit = confirm("Apakah Anda yakin ingin mengumpulkan ujian? Pastikan semua jawaban sudah terisi.");
+            if (confirmSubmit) {
+                finishExam();
+            }
+        }
+    }
+
+    function finishExam() {
+        let correctCount = 0;
+        for (let i = 0; i < examQuestions.length; i++) {
+            if (userAnswers[i] === examQuestions[i].ans) {
+                correctCount++;
+            }
+        }
+        
+        const totalScore = Math.round((correctCount / examQuestions.length) * 100);
+
+        document.getElementById('exam-section').style.display = 'none';
+        const resSection = document.getElementById('result-section');
+        resSection.style.display = 'block';
+
+        document.getElementById('res-nama').textContent = studentData.nama;
+        document.getElementById('res-kelas').textContent = studentData.kelas;
+        document.getElementById('res-absen').textContent = studentData.absen;
+        
+        const scoreCircle = document.getElementById('res-score-circle');
+        scoreCircle.textContent = totalScore;
+        
+        if(totalScore < 60) {
+            scoreCircle.style.background = 'linear-gradient(135deg, #ef4444, #b91c1c)';
+            scoreCircle.style.borderColor = '#fee2e2';
+            scoreCircle.style.boxShadow = '0 10px 25px rgba(239, 68, 68, 0.3)';
+        } else if (totalScore < 80) {
+            scoreCircle.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+            scoreCircle.style.borderColor = '#fef3c7';
+            scoreCircle.style.boxShadow = '0 10px 25px rgba(245, 158, 11, 0.3)';
+        }
+    }
+
+    // Fungsi Menampilkan Halaman Kesalahan & Pembahasan
+    function showReview() {
+        document.getElementById('result-section').style.display = 'none';
+        const reviewSection = document.getElementById('review-section');
+        reviewSection.style.display = 'block';
+
+        const container = document.getElementById('review-container');
+        container.innerHTML = '';
+
+        examQuestions.forEach((qData, index) => {
+            const userAns = userAnswers[index];
+            const isCorrect = userAns === qData.ans;
+
+            const item = document.createElement('div');
+            item.style.padding = '20px';
+            item.style.borderRadius = '14px';
+            item.style.border = `2px solid ${isCorrect ? '#10b981' : '#ef4444'}`;
+            item.style.backgroundColor = isCorrect ? '#f0fdf4' : '#fef2f2';
+
+            let optionsHtml = '';
+            qData.opts.forEach((optText, optIdx) => {
+                let style = 'padding: 10px 14px; margin-top: 8px; border-radius: 10px; font-size: 15px; border: 1px solid #e2e8f0; background: #ffffff;';
+                
+                if (optIdx === qData.ans) {
+                    // Pilihan yang benar
+                    style = 'padding: 10px 14px; margin-top: 8px; border-radius: 10px; font-size: 15px; border: 2px solid #10b981; background-color: #d1fae5; color: #065f46; font-weight: 600;';
+                } else if (optIdx === userAns && !isCorrect) {
+                    // Pilihan user yang salah
+                    style = 'padding: 10px 14px; margin-top: 8px; border-radius: 10px; font-size: 15px; border: 2px solid #ef4444; background-color: #fee2e2; color: #991b1b; text-decoration: line-through; font-weight: 500;';
+                }
+
+                optionsHtml += `<div style="${style}">${optText}</div>`;
+            });
+
+            item.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <strong style="color: #1e293b; font-size: 16px;">Soal ${index + 1}</strong>
+                    <span style="padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; background-color: ${isCorrect ? '#d1fae5' : '#fee2e2'}; color: ${isCorrect ? '#065f46' : '#991b1b'};">
+                        ${isCorrect ? 'Benar' : 'Salah'}
+                    </span>
+                </div>
+                <div style="margin-bottom: 15px; color: #334155; font-size: 16px; font-weight: 500;">${qData.q}</div>
+                <div style="display: flex; flex-direction: column;">
+                    ${optionsHtml}
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function backToResult() {
+        document.getElementById('review-section').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+    }
+</script>
+</body>
+</html>
