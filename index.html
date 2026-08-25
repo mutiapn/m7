@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ulangan Harian - Informatika</title>
+    <title>CBT Ujian Harian - Informatika</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -38,7 +38,7 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1050px;
         }
 
         .card {
@@ -202,7 +202,7 @@
         /* LAYOUT UTAMA UJIAN (KIRI: NAVIGASI, KANAN: SOAL) */
         .exam-layout {
             display: flex;
-            gap: 25px;
+            gap: 30px;
             align-items: flex-start;
         }
 
@@ -212,22 +212,22 @@
             border: 1px solid #e2e8f0;
             padding: 20px;
             border-radius: 14px;
-            width: 280px;
+            width: 300px;
             flex-shrink: 0;
         }
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr); /* 5 kolom */
             gap: 8px;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .nav-btn {
-            padding: 10px 0;
+            padding: 12px 0;
             text-align: center;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
             cursor: pointer;
             border: 1px solid #cbd5e1;
@@ -248,6 +248,18 @@
             line-height: 1.7;
             margin-bottom: 20px;
             color: #1e293b;
+        }
+
+        .badge-hots {
+            display: inline-block;
+            background-color: #ef4444;
+            color: white;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
 
         /* STUDI KASUS STYLING */
@@ -275,7 +287,7 @@
         .options-container {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             margin-bottom: 25px;
         }
 
@@ -313,15 +325,37 @@
             box-shadow: 0 4px 15px rgba(79, 70, 229, 0.1);
         }
 
-        .question-footer-action {
+        /* STYLING TOMBOL RAGU RAGU DI TENGAH */
+        .doubt-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .doubt-label {
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 25px;
-            background: #f8fafc;
-            padding: 12px 20px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #713f12;
+            background-color: #fef08a;
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 2px solid #facc15;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(250, 204, 21, 0.2);
+        }
+
+        .doubt-label:hover {
+            background-color: #fde047;
+            transform: translateY(-2px);
+        }
+
+        .doubt-label input[type="checkbox"] {
+            transform: scale(1.4);
+            accent-color: #ca8a04;
+            cursor: pointer;
         }
 
         .navigation {
@@ -403,11 +437,11 @@
         }
 
         /* Responsive Mobile */
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
             .card { padding: 25px 20px; }
             .exam-layout { flex-direction: column; }
             .nav-panel { width: 100%; }
-            .nav-grid { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); }
+            .nav-grid { grid-template-columns: repeat(5, 1fr); }
             .navigation { flex-direction: column; }
             .navigation .btn { width: 100%; }
             .exam-info { flex-direction: column; gap: 10px; text-align: center; }
@@ -421,7 +455,7 @@
         
         <!-- HEADER -->
         <div class="header" id="main-header">
-            <h1>Ulangan Harian</h1>
+            <h1>Ujian Berbasis Komputer</h1>
             <p>Informatika: Berpikir Komputasional</p>
         </div>
 
@@ -474,11 +508,11 @@
             <div class="exam-layout">
                 <!-- Panel Navigasi di Kiri -->
                 <div class="nav-panel">
-                    <div style="font-size: 14px; font-weight: 600; color: #334155;">Daftar Soal (1 - 15)</div>
-                    <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--text-muted); margin-top: 6px;">
-                        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; display: inline-block;"></span> Terisi</span>
-                        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #facc15; border-radius: 50%; display: inline-block;"></span> Ragu-ragu</span>
-                        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: #e2e8f0; border-radius: 50%; display: inline-block;"></span> Belum terisi</span>
+                    <div style="font-size: 15px; font-weight: 700; color: #1e293b; text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 12px;">Daftar Soal (1 - 15)</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #475569; margin-top: 15px;">
+                        <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 12px; height: 12px; background: #10b981; border-radius: 50%; display: inline-block;"></span> Sudah Terisi</span>
+                        <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 12px; height: 12px; background: #facc15; border-radius: 50%; display: inline-block;"></span> Ragu-ragu</span>
+                        <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 12px; height: 12px; background: #e2e8f0; border-radius: 50%; display: inline-block;"></span> Belum Terisi</span>
                     </div>
                     <div class="nav-grid" id="nav-grid-container">
                         <!-- Digenerate oleh JavaScript -->
@@ -495,11 +529,11 @@
                         <!-- Pilihan ganda muncul di sini -->
                     </div>
 
-                    <!-- Tombol Ragu-ragu -->
-                    <div class="question-footer-action">
-                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600; color: #475569;">
-                            <input type="checkbox" id="doubt-checkbox" onchange="toggleDoubt()" style="transform: scale(1.3); accent-color: #eab308; cursor: pointer;">
-                            Centang jika Ragu-ragu
+                    <!-- Tombol Ragu-ragu di Tengah -->
+                    <div class="doubt-container fade-in">
+                        <label class="doubt-label" id="doubt-label-ui">
+                            <input type="checkbox" id="doubt-checkbox" onchange="toggleDoubt()">
+                            Tandai Ragu-ragu
                         </label>
                     </div>
 
@@ -570,9 +604,11 @@
 </div>
 
 <script>
-    // DATA 15 SOAL BERPIKIR KOMPUTASIONAL
+    // DATA 15 SOAL (10 Dasar Bobot 1, 5 HOTS Bobot 2)
     const dbQuestions = [
+        // --- 10 SOAL DASAR (Bobot: 1) ---
         {
+            weight: 1,
             q: "Apa yang dimaksud dengan Berpikir Komputasional?",
             opts: [
                 "A. Berpikir seperti robot atau mesin dalam kehidupan sehari-hari",
@@ -583,6 +619,7 @@
             ans: 1
         },
         {
+            weight: 1,
             q: "Berikut ini yang BUKAN merupakan 4 pilar dari berpikir komputasional adalah...",
             opts: [
                 "A. Dekomposisi",
@@ -593,6 +630,7 @@
             ans: 3
         },
         {
+            weight: 1,
             q: "Tujuan utama seseorang menggunakan cara berpikir komputasional adalah...",
             opts: [
                 "A. Menyelesaikan masalah secara efisien, sistematis, dan logis",
@@ -603,6 +641,7 @@
             ans: 0
         },
         {
+            weight: 1,
             q: "Proses memecah masalah yang rumit menjadi bagian-bagian yang lebih kecil dan mudah dikelola disebut...",
             opts: [
                 "A. Abstraksi",
@@ -613,16 +652,7 @@
             ans: 2
         },
         {
-            q: "Budi diminta oleh ibunya untuk membersihkan seluruh rumah. Karena rumahnya sangat besar, Budi merasa kewalahan.<br><br>Budi akhirnya memutuskan untuk membagi tugasnya:<br><div class='studi-kasus-box'><ul><li>Hari ini: membersihkan kamar tidur dan kamar mandi.</li><li>Besok: membersihkan ruang tamu dan dapur.</li></ul></div><br>Tindakan Budi menerapkan pilar...",
-            opts: [
-                "A. Dekomposisi",
-                "B. Abstraksi",
-                "C. Pengenalan Pola",
-                "D. Coding"
-            ],
-            ans: 0
-        },
-        {
+            weight: 1,
             q: "Rina ingin memasak Nasi Goreng Spesial. Contoh penerapan <strong>dekomposisi</strong> yang tepat oleh Rina adalah...",
             opts: [
                 "A. Rina langsung menggoreng semua bahan tanpa persiapan",
@@ -633,6 +663,7 @@
             ans: 1
         },
         {
+            weight: 1,
             q: "Apa fungsi utama dari Pengenalan Pola (Pattern Recognition) dalam menyelesaikan masalah?",
             opts: [
                 "A. Menghapus data yang salah",
@@ -643,16 +674,7 @@
             ans: 1
         },
         {
-            q: "Seorang pedagang es buah mengamati kondisi penjualannya:<div class='studi-kasus-box'><ul><li>Penjualan selalu meningkat tajam setiap kali cuaca sangat panas.</li><li>Penjualan juga meningkat tajam pada hari libur.</li></ul>Ketika ia memprediksi minggu depan cuaca akan cerah dan ada tanggal merah, ia menyiapkan stok dua kali lipat.</div><br>Pedagang tersebut menerapkan...",
-            opts: [
-                "A. Dekomposisi",
-                "B. Abstraksi",
-                "C. Pengenalan Pola",
-                "D. Algoritma"
-            ],
-            ans: 2
-        },
-        {
+            weight: 1,
             q: "Andi mencoba login ke akun media sosialnya.<div class='studi-kasus-box'>Sistem memberitahu bahwa Andi telah salah memasukkan password sebanyak 3 kali, dan harus menunggu 5 menit untuk mencoba lagi.</div><br>Sistem yang mengenali aktivitas mencurigakan ini menggunakan metode...",
             opts: [
                 "A. Algoritma",
@@ -663,6 +685,7 @@
             ans: 1
         },
         {
+            weight: 1,
             q: "Dalam berpikir komputasional, proses menyaring informasi, mengabaikan hal yang tidak penting, dan hanya berfokus pada informasi inti disebut...",
             opts: [
                 "A. Abstraksi",
@@ -673,6 +696,7 @@
             ans: 0
         },
         {
+            weight: 1,
             q: "Saat kamu membuat peta penunjuk arah dari sekolah ke rumahmu untuk temanmu, kamu hanya menggambar:<div class='studi-kasus-box'><ul><li>Jalan utama</li><li>Persimpangan penting</li><li>Landmark (bangunan patokan) besar</li></ul>*Tanpa menggambar pohon, tiang listrik, atau warna atap rumah warga.</div><br>Tindakan ini adalah contoh...",
             opts: [
                 "A. Dekomposisi",
@@ -683,16 +707,7 @@
             ans: 1
         },
         {
-            q: "Dalam pembuatan aplikasi <strong>Sistem Informasi Perpustakaan</strong>, data anggota perpustakaan harus dikumpulkan. <br><br>Manakah informasi berikut yang sebaiknya <strong>'diabstraksikan'</strong> (diabaikan karena tidak penting untuk perpustakaan)?",
-            opts: [
-                "A. Nama Lengkap",
-                "B. Nomor Induk Siswa",
-                "C. Makanan Favorit",
-                "D. Alamat dan Nomor Telepon"
-            ],
-            ans: 2
-        },
-        {
+            weight: 1,
             q: "Algoritma dalam pilar berpikir komputasional didefinisikan sebagai...",
             opts: [
                 "A. Mesin penghitung otomatis",
@@ -702,25 +717,62 @@
             ],
             ans: 2
         },
+
+        // --- 5 SOAL HOTS (Bobot: 2) ---
         {
-            q: "Cermati langkah-langkah membuat teh berikut:<div class='studi-kasus-box'><ol><li>Masukkan teh celup ke dalam cangkir.</li><li>Tuangkan air panas.</li><li>Tambahkan gula secukupnya.</li><li>Aduk hingga rata.</li><li>Teh siap dinikmati.</li></ol></div><br>Rangkaian langkah-langkah tersebut adalah contoh penerapan pilar...",
+            weight: 2,
+            q: "Kelompok Budi mendapat tugas membuat video vlog kelas berdurasi 10 menit. Awalnya mereka kebingungan karena tugas ini terasa sangat berat dan waktunya mepet. Jika menerapkan teknik <strong>dekomposisi</strong>, langkah paling tepat yang harus dilakukan Budi sebagai ketua kelompok adalah...",
             opts: [
-                "A. Algoritma",
-                "B. Dekomposisi",
-                "C. Abstraksi",
-                "D. Pengenalan Pola"
+                "A. Mengingat kembali video vlog yang pernah mereka tonton di YouTube untuk meniru gaya editannya",
+                "B. Mengabaikan kualitas video yang penting durasinya mencapai 10 menit agar tugas cepat selesai",
+                "C. Merekam video secara terus-menerus tanpa henti dari awal sampai akhir tanpa naskah",
+                "D. Membagi tugas menjadi bagian lebih kecil: membuat naskah, merekam video, dan mengedit video, lalu membaginya ke anggota kelompok"
             ],
-            ans: 0
+            ans: 3
         },
         {
-            q: "Siti ingin membeli buku secara online. Ia mengikuti panduan:<div class='studi-kasus-box'><ol><li>Buka aplikasi</li><li>Cari buku di kolom pencarian</li><li>Masukkan ke keranjang</li><li>Pilih metode pembayaran</li><li>Lakukan pembayaran</li></ol></div><br>Apa yang terjadi jika Siti mengabaikan konsep Algoritma dan melakukan langkah nomor (5) terlebih dahulu sebelum langkah (3)?",
+            weight: 2,
+            q: "Saat kamu memesan makanan melalui aplikasi <em>ojek online</em>, kamu hanya perlu memperhatikan informasi inti seperti: nama makanan, harga, jarak restoran, dan ongkos kirim. Sistem menyembunyikan informasi seperti warna baju koki atau jenis bahan bakar motor <em>driver</em>.<br><br>Konsep berpikir komputasional yang mengabaikan informasi tidak penting seperti pada kasus di atas disebut...",
             opts: [
-                "A. Transaksi berhasil lebih cepat",
-                "B. Transaksi akan gagal atau error karena urutannya tidak logis",
-                "C. Pola aplikasi akan berubah secara otomatis",
-                "D. Aplikasi akan memecah masalah untuk Siti"
+                "A. Dekomposisi",
+                "B. Abstraksi",
+                "C. Pengenalan Pola",
+                "D. Algoritma"
             ],
             ans: 1
+        },
+        {
+            weight: 2,
+            q: "Dina mendapati baju seragamnya masih kotor dan penuh busa setelah menggunakan mesin cuci. Ia mengingat urutannya:<div class='studi-kasus-box'><ol><li>Masukkan baju kotor ke mesin cuci.</li><li>Tuangkan deterjen secukupnya.</li><li>Putar tombol pengering (spin) 5 menit.</li><li>Putar tombol pencuci (wash) 15 menit.</li><li>Masukkan air hingga baju terendam.</li></ol></div><br>Letak kesalahan urutan logika (<em>bug</em>) pada aktivitas Dina adalah...",
+            opts: [
+                "A. Langkah (5) seharusnya dilakukan paling akhir agar air tidak tumpah",
+                "B. Langkah (3) seharusnya dilakukan setelah langkah (4), karena baju harus dicuci dulu sebelum dikeringkan",
+                "C. Langkah (2) tidak diperlukan jika menggunakan mesin cuci otomatis",
+                "D. Langkah (1) seharusnya dilakukan setelah mesin cuci berputar"
+            ],
+            ans: 1
+        },
+        {
+            weight: 2,
+            q: "Reno sedang bermain <em>game</em> melawan Monster. Ia menyadari bahwa Monster <em>selalu</em> menyemburkan api jika diserang dari depan, dan <em>selalu</em> melompat lambat jika diserang dari belakang. <br><br>Reno menyusun strategi: <em>Lari ke belakang monster &rarr; serang 3 kali &rarr; menghindar &rarr; ulangi</em>.<br><br>Dua pilar komputasional apa yang secara berurutan sedang diterapkan Reno?",
+            opts: [
+                "A. Dekomposisi dan Abstraksi",
+                "B. Pengenalan Pola dan Algoritma",
+                "C. Abstraksi dan Algoritma",
+                "D. Algoritma dan Dekomposisi"
+            ],
+            ans: 1
+        },
+        {
+            weight: 2,
+            q: "Cermati aturan sistem pada layar kunci HP berikut:<div class='studi-kasus-box'><ol><li>Minta pengguna memasukkan PIN.</li><li>Jika PIN benar, buka kunci layar.</li><li>Jika PIN salah, tampilkan pesan salah.</li><li>(Langkah X)</li></ol></div><br>Agar HP aman dari orang jahat yang menebak PIN terus-menerus secara acak, <strong>Langkah X</strong> yang paling logis untuk ditambahkan adalah...",
+            opts: [
+                "A. Memberitahu petunjuk 1 angka pertama dari PIN agar pengguna mudah ingat",
+                "B. Menghapus seluruh foto dan kontak secara otomatis jika PIN salah 1 kali",
+                "C. Memberikan waktu tunggu (diblokir sementara) selama 30 detik jika PIN salah 5 kali berturut-turut",
+                "D. Mengubah PIN secara otomatis setiap kali layar HP dimatikan"
+            ],
+            ans: 2
         }
     ];
 
@@ -737,6 +789,34 @@
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
+    }
+
+    function prepareQuestions(questions) {
+        // Duplikat array agar tidak mengubah database soal asli
+        let cloned = JSON.parse(JSON.stringify(questions));
+
+        cloned.forEach(q => {
+            // 1. Pisahkan teks jawaban dari awalan "A. ", "B. ", dll dan simpan index aslinya
+            let optionsWithIndex = q.opts.map((optText, index) => {
+                return {
+                    text: optText.replace(/^[A-D]\.\s*/, ''), // Menghapus teks A., B., C., D.
+                    originalIndex: index
+                };
+            });
+
+            // 2. Acak urutan pilihan jawaban tersebut
+            optionsWithIndex = shuffleArray(optionsWithIndex);
+
+            // 3. Perbarui posisi index kunci jawaban (ans) yang baru
+            q.ans = optionsWithIndex.findIndex(o => o.originalIndex === q.ans);
+
+            // 4. Tambahkan kembali awalan A, B, C, D yang rapi sesuai urutan baru
+            const prefixes = ["A. ", "B. ", "C. ", "D. "];
+            q.opts = optionsWithIndex.map((o, idx) => prefixes[idx] + o.text);
+        });
+
+        // Terakhir, acak urutan soalnya dan kembalikan datanya
+        return shuffleArray(cloned);
     }
 
     function startExam() {
@@ -756,7 +836,9 @@
         }
 
         studentData = { nama, kelas, absen: absenNum };
-        examQuestions = shuffleArray(dbQuestions);
+        
+        // Mengacak posisi soal DAN pilihan jawabannya secara bersamaan
+        examQuestions = prepareQuestions(dbQuestions);
         userAnswers = new Array(examQuestions.length).fill(null);
         userDoubts = new Array(examQuestions.length).fill(false);
         currentQuestionIndex = 0;
@@ -785,13 +867,27 @@
         
         renderNavGrid();
 
-        document.getElementById('doubt-checkbox').checked = userDoubts[currentQuestionIndex];
+        // Update UI tombol ragu-ragu
+        const doubtCheckbox = document.getElementById('doubt-checkbox');
+        const doubtLabelUI = document.getElementById('doubt-label-ui');
+        doubtCheckbox.checked = userDoubts[currentQuestionIndex];
+        
+        if (doubtCheckbox.checked) {
+            doubtLabelUI.style.backgroundColor = '#fde047';
+            doubtLabelUI.style.transform = 'scale(1.05)';
+        } else {
+            doubtLabelUI.style.backgroundColor = '#fef08a';
+            doubtLabelUI.style.transform = 'scale(1)';
+        }
         
         const qTextNode = document.getElementById('question-text');
         qTextNode.classList.remove('fade-in');
         void qTextNode.offsetWidth; 
         qTextNode.classList.add('fade-in');
-        qTextNode.innerHTML = `<strong>${currentQuestionIndex + 1}.</strong> ${qData.q}`;
+        
+        // Memunculkan lencana 'HOTS' jika soal tersebut berbobot 2
+        let hotsBadge = qData.weight === 2 ? `<span class="badge-hots">HOTS (Poin: 2)</span><br>` : '';
+        qTextNode.innerHTML = `${hotsBadge}<strong>${currentQuestionIndex + 1}.</strong> ${qData.q}`;
 
         const optionsContainer = document.getElementById('options-container');
         optionsContainer.classList.remove('fade-in');
@@ -888,6 +984,17 @@
     function toggleDoubt() {
         const checkbox = document.getElementById('doubt-checkbox');
         userDoubts[currentQuestionIndex] = checkbox.checked;
+        
+        // Visual feedback tombol di tengah
+        const doubtLabelUI = document.getElementById('doubt-label-ui');
+        if (checkbox.checked) {
+            doubtLabelUI.style.backgroundColor = '#fde047';
+            doubtLabelUI.style.transform = 'scale(1.05)';
+        } else {
+            doubtLabelUI.style.backgroundColor = '#fef08a';
+            doubtLabelUI.style.transform = 'scale(1)';
+        }
+
         renderNavGrid();
     }
 
@@ -899,7 +1006,6 @@
     }
 
     function nextQuestion() {
-        // Jika belum di soal terakhir (masih menekan Selanjutnya)
         if (currentQuestionIndex < examQuestions.length - 1) {
             if (userAnswers[currentQuestionIndex] === null && !userDoubts[currentQuestionIndex]) {
                 const confirmNext = confirm("Anda belum menjawab soal ini. Lanjutkan ke soal berikutnya?");
@@ -908,9 +1014,7 @@
             currentQuestionIndex++;
             renderQuestion();
         } else {
-            // JIKA MENEKAN TOMBOL SELESAI & KUMPULKAN
-            
-            // 1. Cek apakah ada yang masih kosong (abu-abu) atau ragu-ragu (kuning)
+            // PROSES VALIDASI BLOKIR SUBMIT
             let unfinished = [];
             let doubtful = [];
 
@@ -923,22 +1027,20 @@
                 }
             }
 
-            // 2. Jika ada, gagalkan pengumpulan dan tampilkan alert informatif
             if (unfinished.length > 0 || doubtful.length > 0) {
-                let alertMsg = "Anda belum bisa mengumpulkan ujian karena ada soal yang bermasalah:\n\n";
+                let alertMsg = "Ujian BELUM BISA dikumpulkan. Terdapat soal yang bermasalah:\n\n";
                 if (unfinished.length > 0) {
-                    alertMsg += "- Belum diisi (Abu): Soal " + unfinished.join(", ") + "\n";
+                    alertMsg += "- Belum dijawab (Abu-abu): Soal " + unfinished.join(", ") + "\n";
                 }
                 if (doubtful.length > 0) {
-                    alertMsg += "- Ragu-ragu (Kuning): Soal " + doubtful.join(", ") + "\n";
+                    alertMsg += "- Masih Ragu-ragu (Kuning): Soal " + doubtful.join(", ") + "\n";
                 }
-                alertMsg += "\nSilakan lengkapi jawaban dan hilangkan centang 'Ragu-ragu' terlebih dahulu.";
+                alertMsg += "\nSilakan lengkapi jawaban dan hilangkan centang 'Ragu-ragu' pada nomor di atas.";
                 alert(alertMsg);
-                return; // Membatalkan proses pengumpulan
+                return; // Gagalkan submit
             }
 
-            // 3. Jika sudah aman (terisi semua dan tidak ada yang kuning), boleh konfirmasi submit
-            const confirmSubmit = confirm("Apakah Anda yakin ingin mengumpulkan ujian? Semua jawaban sudah terisi.");
+            const confirmSubmit = confirm("Apakah Anda yakin ingin mengumpulkan ujian? Pastikan semua jawaban sudah benar.");
             if (confirmSubmit) {
                 finishExam();
             }
@@ -946,14 +1048,17 @@
     }
 
     function finishExam() {
-        let correctCount = 0;
+        let rawScore = 0; // Maksimal skor mentah (raw score) adalah 20
+        
+        // Menghitung berdasarkan bobot tiap soal
         for (let i = 0; i < examQuestions.length; i++) {
             if (userAnswers[i] === examQuestions[i].ans) {
-                correctCount++;
+                rawScore += examQuestions[i].weight;
             }
         }
         
-        const totalScore = Math.round((correctCount / examQuestions.length) * 100);
+        // Karena poin max 20, maka dikali 5 untuk mencapai skala 100
+        const totalScore = rawScore * 5;
 
         document.getElementById('exam-section').style.display = 'none';
         const resSection = document.getElementById('result-section');
@@ -1007,10 +1112,16 @@
 
                 optionsHtml += `<div style="${style}">${optText}</div>`;
             });
+            
+            // Tambahkan text poin untuk bagian Review agar user tahu soal itu bobotnya berapa
+            let pointLabel = qData.weight === 2 ? "Bobot Poin: 2 (HOTS)" : "Bobot Poin: 1";
 
             item.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <strong style="color: #1e293b; font-size: 16px;">Soal ${index + 1}</strong>
+                    <div>
+                        <strong style="color: #1e293b; font-size: 16px;">Soal ${index + 1}</strong>
+                        <span style="font-size: 12px; color: #64748b; margin-left: 10px;">${pointLabel}</span>
+                    </div>
                     <span style="padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; background-color: ${isCorrect ? '#d1fae5' : '#fee2e2'}; color: ${isCorrect ? '#065f46' : '#991b1b'};">
                         ${isCorrect ? 'Benar' : 'Salah'}
                     </span>
