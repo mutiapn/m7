@@ -1,2 +1,1 @@
-# uh-7
-ULANGAN HARIAN 1
+Modul Interaktif Informatika Kelas 7
